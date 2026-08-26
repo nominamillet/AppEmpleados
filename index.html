@@ -429,21 +429,41 @@
     }
 
     async function cargarIncidencias() {
-      const cnt = document.getElementById('cntIncidencias');
-      cnt.innerHTML = "Cargando...";
-      const list = await apiPost({ action: "getIncidencias", numEmpleado: empSesion.numEmpleado });
+  const cnt = document.getElementById('cntIncidencias');
+  cnt.innerHTML = "Cargando...";
+  
+  const list = await apiPost({ action: "getIncidencias", numEmpleado: empSesion.numEmpleado });
 
-      if (!list || list.length === 0) {
-        cnt.innerHTML = "<p>Sin incidencias registradas.</p>";
-        return;
-      }
-      let html = "<table><thead><tr><th>TIPO</th><th>FECHA</th><th>DIAS</th></tr></thead><tbody>";
-      list.forEach(i => {
-        html += `<tr><td>${i.tipo}</td><td>${i.fecha}</td><td>${i.dias}</td></tr>`;
-      });
-      html += "</tbody></table>";
-      cnt.innerHTML = html;
-    }
+  if (!list || list.length === 0) {
+    cnt.innerHTML = "<p style='text-align:center;'>Sin incidencias registradas.</p>";
+    return;
+  }
+  
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th>TIPO</th>
+          <th>FECHA</th>
+          <th>DÍAS/HRS</th>
+          <th>ESTADO</th>
+        </tr>
+      </thead>
+      <tbody>`;
+      
+  list.forEach(i => {
+    html += `
+      <tr>
+        <td>${i.tipo}</td>
+        <td>${i.fecha}</td>
+        <td>${i.dias}</td>
+        <td>${i.autorizado}</td>
+      </tr>`;
+  });
+  
+  html += "</tbody></table>";
+  cnt.innerHTML = html;
+}
   </script>
 </body>
 </html>
