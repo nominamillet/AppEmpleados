@@ -7,140 +7,287 @@
   
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    
     body {
-      background-color: #e9ecef;
+      background-color: #f4f6f8;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
       padding: 15px;
+      color: #1e293b;
     }
+    
     .card {
-      background: #dbeafe;
+      background: #ffffff;
       width: 100%;
-      max-width: 380px;
-      padding: 25px;
-      border-radius: 12px;
-      border: 2px solid #1e3a8a;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      max-width: 390px;
+      padding: 24px;
+      border-radius: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       position: relative;
-      min-height: 480px;
+      min-height: 520px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
     }
+    
     .btn-close {
       position: absolute;
-      top: 15px;
-      right: 18px;
-      font-weight: bold;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      background: #f1f5f9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
       cursor: pointer;
-      font-size: 18px;
-      color: #000;
+      font-size: 14px;
+      color: #64748b;
+      transition: all 0.2s ease;
     }
-    .title-app { text-align: center; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+    
+    .btn-close:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .title-app { 
+      text-align: center; 
+      font-size: 22px; 
+      font-weight: 700; 
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    
     .subtitle-app {
       text-align: center;
-      font-size: 16px;
-      font-weight: bold;
-      border-bottom: 2px solid #1e3a8a;
-      padding-bottom: 8px;
-      margin-bottom: 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #22c55e;
+      margin-top: 4px;
+      margin-bottom: 24px;
     }
-    .form-group { margin-bottom: 15px; }
-    label { font-weight: bold; display: block; margin-bottom: 5px; }
+
+    .divider {
+      height: 1px;
+      background-color: #f1f5f9;
+      margin: 15px 0 20px 0;
+      border: none;
+    }
+
+    .form-group { margin-bottom: 16px; text-align: left; }
+    
+    label { 
+      font-weight: 600; 
+      display: block; 
+      margin-bottom: 6px; 
+      font-size: 13px;
+      color: #475569;
+    }
+    
     input[type="text"], input[type="password"] {
       width: 100%;
-      padding: 10px;
-      border: 2px solid #000;
-      border-radius: 12px;
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
       outline: none;
-      background: #fff;
+      background: #f8fafc;
+      font-size: 14px;
+      transition: all 0.2s;
     }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #22c55e;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+    }
+
     .btn-main {
       width: 100%;
-      padding: 12px;
-      background-color: #085a86;
+      padding: 14px;
+      background-color: #22c55e;
       color: white;
-      border: 1px solid #000;
-      border-radius: 10px;
+      border: none;
+      border-radius: 18px;
       cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 600;
       margin-top: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
     }
-    .btn-main:hover { background-color: #064567; }
-    
+
+    .btn-main:hover { 
+      background-color: #16a34a; 
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: #f1f5f9;
+      color: #475569;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e2e8f0;
+      color: #0f172a;
+    }
+
     .menu-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 10px;
     }
+
     .menu-item {
-      background: #085a86;
-      color: white;
-      border-radius: 15px;
-      padding: 15px;
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 20px 15px;
       text-align: center;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid #000;
-      font-size: 28px;
+      border: 1px solid #f1f5f9;
+      font-size: 26px;
+      transition: all 0.2s ease;
     }
-    .menu-item span { font-size: 14px; font-weight: bold; color: #fff; margin-top: 5px; }
 
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; }
-    th, td { border: 1px solid #999; padding: 6px; text-align: center; font-size: 13px; }
-    th { background: #ccc; font-weight: bold; }
-    
+    .menu-item:hover {
+      background: #e8f8eb;
+      border-color: #bbf7d0;
+      transform: translateY(-2px);
+    }
+
+    .menu-item span { 
+      font-size: 13px; 
+      font-weight: 600; 
+      color: #334155; 
+      margin-top: 8px; 
+    }
+
+    /* Tablas modernas y Filas Alternadas */
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; background: #fff; border-radius: 12px; overflow: hidden; }
+    th, td { padding: 9px 10px; text-align: center; font-size: 12px; }
+    th { background: #f1f5f9; font-weight: 600; color: #475569; }
+    td { border-bottom: 1px solid #f1f5f9; }
+
+    /* Estilo alternado específico para la tabla del Reloj */
+    .table-zebra tbody tr:nth-child(odd) {
+      background-color: #f8fafc;
+    }
+    .table-zebra tbody tr:nth-child(even) {
+      background-color: #ffffff;
+    }
+
     .hidden { display: none !important; }
-    .msg-error { color: red; text-align: center; font-size: 13px; margin-top: 10px; }
-    
+    .msg-error { color: #ef4444; text-align: center; font-size: 13px; margin-top: 12px; font-weight: 500; }
+
     .recibo-block {
-      background: #fff;
-      padding: 8px;
-      border-radius: 6px;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 14px;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #e2e8f0;
       text-align: left;
     }
-    .recibo-link { color: #d9534f; font-weight: bold; text-decoration: underline; font-size: 13px; }
 
-    .field-label { font-size: 12px; color: #333; margin-top: 8px; }
-    .field-value { font-size: 14px; font-weight: bold; text-transform: uppercase; }
-    .qr-bar-container { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; }
+    .recibo-link { 
+      color: #16a34a; 
+      font-weight: 600; 
+      text-decoration: none; 
+      font-size: 13px; 
+      display: inline-block;
+      margin: 2px 0;
+    }
+
+    .recibo-link:hover { text-decoration: underline; }
+
+    .field-card {
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 14px;
+      margin-bottom: 8px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .field-label { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+    .field-value { font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px; }
+    
+    .qr-bar-container { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-top: 15px; 
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid #f1f5f9;
+    }
+
+    /* Bloques Estilizados (Bonos, Extras e Incidencias) */
+    .block-detail {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      background-color: #f8fafc;
+    }
+
+    .block-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      padding: 6px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
 
   <div class="card">
 
+    <!-- LOGIN -->
     <div id="viewLogin">
-      <div class="title-app" style="margin-top:20px;">MyAppPersonal</div>
-      <hr style="border: 1px solid #1e3a8a; margin-bottom: 25px;">
+      <div style="text-align:center; margin-top:20px; margin-bottom: 10px;">
+        <div style="width: 60px; height: 60px; background: #e8f8eb; color: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; font-size: 28px;">👤</div>
+        <div class="title-app">MyAppPersonal</div>
+      </div>
+      <hr class="divider">
       
       <div class="form-group">
-        <label>Usuario:</label>
-        <input type="text" id="txtUser">
+        <label>Usuario</label>
+        <input type="text" id="txtUser" placeholder="Ingresa tu usuario">
       </div>
       <div class="form-group">
-        <label>Contraseña:</label>
-        <input type="password" id="txtPass">
+        <label>Contraseña</label>
+        <input type="password" id="txtPass" placeholder="••••••••">
       </div>
       
       <button class="btn-main" onclick="fnLogin()">ENTRAR</button>
-      <button class="btn-main" style="background:#555; margin-top:10px;" onclick="window.close()">CERRAR</button>
+      <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="window.close()">CERRAR</button>
       <div id="loginError" class="msg-error"></div>
     </div>
 
+    <!-- MENÚ PRINCIPAL -->
     <div id="viewMenu" class="hidden">
-      <div class="btn-close" onclick="fnLogout()">X</div>
-      <div class="title-app">MyAppPersonal</div>
+      <div class="btn-close" onclick="fnLogout()">✕</div>
+      <div class="title-app" style="margin-top:10px;">MyAppPersonal</div>
       <div class="subtitle-app" id="lblNombreEmp">Cargando...</div>
 
       <div class="menu-grid">
@@ -150,7 +297,7 @@
         </div>
         <div class="menu-item" onclick="fnNavTo('viewNomina')">
           💵
-          <span>Nomina</span>
+          <span>Nómina</span>
         </div>
         <div class="menu-item" onclick="fnNavTo('viewDatos')">
           👤
@@ -163,107 +310,106 @@
       </div>
     </div>
 
+    <!-- VISTA RELOJ -->
     <div id="viewReloj" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">X</div>
-      <div class="title-app">⏱️ Reloj</div>
-      <hr style="border: 1px solid #1e3a8a;">
+      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+      <div class="title-app" style="margin-top:10px;">⏱️ Reloj</div>
+      <hr class="divider">
       <div id="cntReloj">Cargando marcajes...</div>
     </div>
 
+    <!-- VISTA NÓMINA -->
     <div id="viewNomina" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">X</div>
-      <div class="title-app">💵 Nomina</div>
+      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+      <div class="title-app" style="margin-top:10px;">💵 Nómina</div>
       <div style="text-align:left; margin-top:10px;">
-        <span style="font-size:12px;">hola</span><br>
-        <strong id="lblNominaEmpleado">...</strong>
+        <span style="font-size:11px; color:#64748b;">Empleado:</span><br>
+        <strong id="lblNominaEmpleado" style="color:#0f172a;">...</strong>
       </div>
-      <h3 style="text-align:center; margin: 10px 0;">RECIBOS MES</h3>
-      <div style="text-align:left; margin-bottom:10px;">
-        <a href="#" style="color:#0000ee; text-decoration:underline; font-weight:bold;" onclick="fnNavTo('viewDetalleBonos')">Detalle Bono y extra</a>
+      
+      <div style="margin: 15px 0 10px 0; display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0; font-size:14px; font-weight:700; color:#334155;">RECIBOS MES</h3>
+        <a href="#" style="color:#22c55e; text-decoration:none; font-weight:700; font-size:12px;" onclick="fnNavTo('viewDetalleBonos')">Ver Bonos / Extras →</a>
       </div>
       <div id="cntRecibos">Cargando recibos...</div>
     </div>
 
+    <!-- VISTA DETALLE BONOS Y EXTRAS -->
     <div id="viewDetalleBonos" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewNomina')">X</div>
-      <div class="title-app">Detalle Bonos y Extras</div>
-      <hr style="border: 1px solid #1e3a8a;">
-      
-      <h4 style="margin:10px 0 5px 0;">Bonos</h4>
-      <table>
-        <thead>
-          <tr style="background:#ffff00;">
-            <th>Importe</th>
-            <th>Motivo</th>
-          </tr>
-        </thead>
-        <tbody id="tbBonos"></tbody>
-      </table>
-
-      <h4 style="margin:15px 0 5px 0;">Extras</h4>
-      <table>
-        <thead>
-          <tr style="background:#ffff00;">
-            <th>Fecha</th>
-            <th>Horas</th>
-          </tr>
-        </thead>
-        <tbody id="tbExtras"></tbody>
-      </table>
+      <div class="btn-close" onclick="fnNavTo('viewNomina')">✕</div>
+      <div class="title-app" style="margin-top:10px; font-size:18px;">Detalle Bonos y Extras</div>
+      <hr class="divider">
+      <div id="cntDetalleBonosExtras">Cargando detalles...</div>
     </div>
 
+    <!-- VISTA DATOS PERSONALES -->
     <div id="viewDatos" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">X</div>
-      <div class="title-app">👤 Datos Personales</div>
-      <hr style="border: 1px solid #1e3a8a;">
+      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+      <div class="title-app" style="margin-top:10px;">👤 Datos Personales</div>
+      <hr class="divider">
 
       <div style="text-align:left;">
-        <div class="field-label">NOMBRE:</div>
-        <div class="field-value" id="dNombre">-</div>
-
-        <div class="field-label">FECHA INGRESO:</div>
-        <div class="field-value" id="dIngreso">-</div>
-
-        <div class="field-label">CURP:</div>
-        <div class="field-value" id="dCurp">-</div>
-
-        <div class="field-label">IMSS:</div>
-        <div class="field-value">
-          <span id="dImss">-</span> 
-          <span id="cntAfilPdf" style="margin-left:8px;"></span>
+        <div class="field-card">
+          <div class="field-label">Nombre</div>
+          <div class="field-value" id="dNombre">-</div>
         </div>
 
-        <div class="field-label">LOCALIDAD:</div>
-        <div class="field-value" id="dLocalidad">-</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+          <div class="field-card">
+            <div class="field-label">Ingreso</div>
+            <div class="field-value" id="dIngreso">-</div>
+          </div>
+          <div class="field-card">
+            <div class="field-label">CURP</div>
+            <div class="field-value" id="dCurp" style="font-size:11px;">-</div>
+          </div>
+        </div>
 
-        <div class="field-label">RUTA:</div>
-        <div class="field-value" id="dRuta">-</div>
+        <div class="field-card">
+          <div class="field-label">IMSS</div>
+          <div class="field-value">
+            <span id="dImss">-</span> 
+            <span id="cntAfilPdf" style="margin-left:8px;"></span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+          <div class="field-card">
+            <div class="field-label">Localidad</div>
+            <div class="field-value" id="dLocalidad">-</div>
+          </div>
+          <div class="field-card">
+            <div class="field-label">Ruta</div>
+            <div class="field-value" id="dRuta">-</div>
+          </div>
+        </div>
 
         <div class="qr-bar-container">
-          <div>
-            <div class="field-label">NCOMEDOR:</div>
+          <div style="text-align:center;">
+            <div class="field-label" style="margin-bottom:4px;">Comedor</div>
             <svg id="barcodeComedor"></svg>
           </div>
-          <div>
-            <div class="field-label" style="text-align:center;">QR:</div>
-            <div id="qrcodeCanvas"></div>
+          <div style="text-align:center;">
+            <div class="field-label" style="margin-bottom:4px;">QR Acceso</div>
+            <div id="qrcodeCanvas" style="display:inline-block;"></div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- VISTA INCIDENCIAS -->
     <div id="viewIncidencias" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">X</div>
-      <div class="title-app">🏖️ Incidencias</div>
-      <hr style="border: 1px solid #1e3a8a;">
+      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+      <div class="title-app" style="margin-top:10px;">🏖️ Incidencias</div>
+      <hr class="divider">
       <div id="cntIncidencias">Cargando...</div>
     </div>
 
   </div>
 
   <script>
-    // 🔗 REEMPLAZA CON TU URL PUBLICADA DE GOOGLE APPS SCRIPT
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbziRUmKPQGPr-Dek4khPKZ_8eSpF-DqexAsfmEHelJDnLI9nhXvwx6lXyYUBCK3dcaj/exec";
+    // 🔗 TU URL DE GOOGLE APPS SCRIPT
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzjqu8rhceTHOTlo2QyWSdt0it6NP42N-2bpwwS3nfX8zby6wBceHcGAM7w07wOORih/exec";
 
     let empSesion = null;
 
@@ -319,60 +465,197 @@
       fnNavTo('viewLogin');
     }
 
-    async function cargarReloj() {
-      const cnt = document.getElementById('cntReloj');
-      cnt.innerHTML = "Cargando...";
-      const data = await apiPost({ action: "getReloj", numEmpleado: empSesion.numEmpleado });
-      
-      if (!data || data.length === 0) {
-        cnt.innerHTML = "<p>No hay marcajes registrados.</p>";
-        return;
+// RELOJ CON AGRUPAMIENTO DE COLOR POR FECHA
+async function cargarReloj() {
+  const cnt = document.getElementById('cntReloj');
+  cnt.innerHTML = "<p style='text-align:center;'>Cargando marcajes...</p>";
+  const data = await apiPost({ action: "getReloj", numEmpleado: empSesion.numEmpleado });
+  
+  if (!data || data.length === 0) {
+    cnt.innerHTML = "<p style='text-align:center;'>No hay marcajes registrados.</p>";
+    return;
+  }
+
+  let html = "<table><thead><tr><th>Fecha</th><th>Hora</th></tr></thead><tbody>";
+  
+  let ultimaFecha = "";
+  let esFilaOpaca = false;
+
+  data.forEach(r => {
+    // Si la fecha cambia con respecto al registro anterior, alternamos el fondo
+    if (r.fecha !== ultimaFecha) {
+      if (ultimaFecha !== "") {
+        esFilaOpaca = !esFilaOpaca;
       }
-      let html = "<table><thead><tr><th>Fecha</th><th>Hora</th></tr></thead><tbody>";
-      data.forEach(r => {
-        html += `<tr><td>${r.fecha}</td><td>${r.hora}</td></tr>`;
-      });
-      html += "</tbody></table>";
-      cnt.innerHTML = html;
+      ultimaFecha = r.fecha;
     }
+
+    // Aplicamos fondo opaco (#f8fafc) o blanco (#ffffff) según el bloque de fecha
+    const estiloFondo = esFilaOpaca ? "background-color: #f8fafc;" : "background-color: #ffffff;";
+
+    html += `<tr style="${estiloFondo}">
+              <td>${r.fecha}</td>
+              <td>${r.hora}</td>
+            </tr>`;
+  });
+
+  html += "</tbody></table>";
+  cnt.innerHTML = html;
+}
 
     async function cargarNomina() {
       const cnt = document.getElementById('cntRecibos');
-      cnt.innerHTML = "Cargando recibos...";
+      cnt.innerHTML = "<p style='text-align:center;'>Cargando recibos...</p>";
       const list = await apiPost({ action: "getRecibos", numEmpleado: empSesion.numEmpleado });
 
       if (!list || list.length === 0) {
-        cnt.innerHTML = "<p>No se encontraron recibos.</p>";
+        cnt.innerHTML = "<p style='text-align:center;'>No se encontraron recibos.</p>";
         return;
       }
       let html = "";
       list.forEach(r => {
         html += `
           <div class="recibo-block">
-            <div style="font-size:11px; color:#666;">${r.fecha}</div>
-            <a href="${r.url}" target="_blank" class="recibo-link">${r.nombre}</a>
-            <div style="font-size:11px; margin-top:3px;">
-              Extras: importe extras: $${r.importeExtras} / Bonos: $${r.bono}
+            <div style="font-size:11px; color:#64748b;">${r.fecha}</div>
+            <a href="${r.url}" target="_blank" class="recibo-link">📄 ${r.nombre}</a>
+            <div style="font-size:11px; margin-top:4px; color:#334155;">
+              Extras: <strong>$${r.importeExtras}</strong> | Bonos: <strong>$${r.bono}</strong>
             </div>
           </div>`;
       });
       cnt.innerHTML = html;
     }
 
+    function obtenerColorTexto(estado) {
+      const st = String(estado).trim().toUpperCase();
+      if (st === "NOMINA") return "#15803d";
+      if (st.includes("AUTORIZAD") || st.includes("AUTORIZA")) return "#16a34a";
+      if (st.includes("PENDIENTE")) return "#d97706";
+      if (st.includes("CANCELADO") || st.includes("RECHAZADO")) return "#dc2626";
+      return "#475569";
+    }
+
     async function cargarDetalleBonos() {
+      const cnt = document.getElementById("cntDetalleBonosExtras");
+      cnt.innerHTML = "<p style='text-align:center;'>Cargando detalle...</p>";
+
       const data = await apiPost({ action: "getDetalleBonos", numEmpleado: empSesion.numEmpleado });
 
-      const tbB = document.getElementById('tbBonos');
-      tbB.innerHTML = "";
-      data.bonos.forEach(b => {
-        tbB.innerHTML += `<tr><td>$ ${parseFloat(b.importe).toFixed(2)}</td><td>${b.motivo}</td></tr>`;
-      });
+      const extrasValidacion = (data.extras || []).filter(e => String(e.autoriza).trim().toUpperCase() !== "NOMINA");
+      const extrasPago = (data.extras || []).filter(e => String(e.autoriza).trim().toUpperCase() === "NOMINA");
 
-      const tbE = document.getElementById('tbExtras');
-      tbE.innerHTML = "";
-      data.extras.forEach(e => {
-        tbE.innerHTML += `<tr><td>${e.fecha}</td><td>${e.horas}</td></tr>`;
-      });
+      const bonosValidacion = (data.bonos || []).filter(b => String(b.autoriza).trim().toUpperCase() !== "NOMINA");
+      const bonosPago = (data.bonos || []).filter(b => String(b.autoriza).trim().toUpperCase() === "NOMINA");
+
+      let html = "";
+
+      // BLOQUE 1: EN PROCESO VALIDACIÓN
+      html += `
+        <div class="block-detail">
+          <div class="block-header">EN PROCESO DE VALIDACIÓN</div>
+          
+          <strong style="font-size:12px; color:#475569;">Bonos</strong>
+          <table style="margin-bottom:12px;">
+            <thead>
+              <tr>
+                <th>Importe</th>
+                <th>Motivo</th>
+              </tr>
+            </thead>
+            <tbody>`;
+      
+      if (bonosValidacion.length === 0) {
+        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin bonos en validación</td></tr>`;
+      } else {
+        bonosValidacion.forEach(b => {
+          const color = obtenerColorTexto(b.autoriza);
+          html += `
+            <tr style="color:${color}; font-weight:600;">
+              <td>$ ${Number(b.importe).toFixed(2)}</td>
+              <td>${b.motivo}</td>
+            </tr>`;
+        });
+      }
+      html += `</tbody></table>`;
+
+      html += `
+          <strong style="font-size:12px; color:#475569;">Extras</strong>
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+      if (extrasValidacion.length === 0) {
+        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin extras en validación</td></tr>`;
+      } else {
+        extrasValidacion.forEach(e => {
+          const color = obtenerColorTexto(e.autoriza);
+          html += `
+            <tr style="color:${color}; font-weight:600;">
+              <td>${e.fecha}</td>
+              <td>${e.horas} hrs</td>
+            </tr>`;
+        });
+      }
+      html += `</tbody></table></div>`;
+
+      // BLOQUE 2: EN PROCESO DE PAGO
+      html += `
+        <div class="block-detail">
+          <div class="block-header" style="background:#e8f8eb; color:#15803d; border-color:#bbf7d0;">EN PROCESO DE PAGO</div>
+          
+          <strong style="font-size:12px; color:#475569;">Bonos</strong>
+          <table style="margin-bottom:12px;">
+            <thead>
+              <tr>
+                <th>Importe</th>
+                <th>Motivo</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+      if (bonosPago.length === 0) {
+        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin bonos en proceso de pago</td></tr>`;
+      } else {
+        bonosPago.forEach(b => {
+          html += `
+            <tr style="color:#15803d; font-weight:600;">
+              <td>$ ${Number(b.importe).toFixed(2)}</td>
+              <td>${b.motivo}</td>
+            </tr>`;
+        });
+      }
+      html += `</tbody></table>`;
+
+      html += `
+          <strong style="font-size:12px; color:#475569;">Extras</strong>
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Horas</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+      if (extrasPago.length === 0) {
+        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin extras en proceso de pago</td></tr>`;
+      } else {
+        extrasPago.forEach(e => {
+          html += `
+            <tr style="color:#15803d; font-weight:600;">
+              <td>${e.fecha}</td>
+              <td>${e.horas} hrs</td>
+            </tr>`;
+        });
+      }
+      html += `</tbody></table></div>`;
+
+      cnt.innerHTML = html;
     }
 
     async function cargarDatosPersonales() {
@@ -383,14 +666,13 @@
       document.getElementById('dLocalidad').innerText = empSesion.localidad;
       document.getElementById('dRuta').innerText = empSesion.ruta;
 
-      // Buscar Enlace del PDF del IMSS
       const cntAfil = document.getElementById('cntAfilPdf');
-      cntAfil.innerHTML = "<span style='font-size:11px; color:#666;'>Buscando Afil...</span>";
+      cntAfil.innerHTML = "<span style='font-size:11px; color:#94a3b8;'>Buscando...</span>";
 
       if (empSesion.imss) {
         const res = await apiPost({ action: "getAfilPdf", imss: empSesion.imss });
         if (res.exito) {
-          cntAfil.innerHTML = `<a href="${res.url}" target="_blank" style="color:red; text-decoration:underline; font-size:12px; font-weight:bold;">Afil IMSS</a>`;
+          cntAfil.innerHTML = `<a href="${res.url}" target="_blank" style="color:#ef4444; text-decoration:none; font-size:11px; font-weight:700;">[PDF]</a>`;
         } else {
           cntAfil.innerHTML = "";
         }
@@ -398,13 +680,12 @@
         cntAfil.innerHTML = "";
       }
 
-      // Renderizado de Código de Barras (NCOMEDOR)
       if (empSesion.nComedor) {
         try {
           JsBarcode("#barcodeComedor", empSesion.nComedor.toString(), {
             format: "CODE128",
-            width: 1.5,
-            height: 40,
+            width: 1.2,
+            height: 35,
             displayValue: false
           });
         } catch (e) {
@@ -412,15 +693,14 @@
         }
       }
 
-      // Renderizado de Código QR
       const qrContainer = document.getElementById('qrcodeCanvas');
       qrContainer.innerHTML = "";
       if (empSesion.qr) {
         try {
           new QRCode(qrContainer, {
             text: empSesion.qr.toString(),
-            width: 85,
-            height: 85
+            width: 70,
+            height: 70
           });
         } catch (e) {
           console.error("Error QR:", e);
@@ -428,42 +708,82 @@
       }
     }
 
+    // INCIDENCIAS REESTRUSTURADAS COMO EXTRAS Y BONOS
     async function cargarIncidencias() {
-  const cnt = document.getElementById('cntIncidencias');
-  cnt.innerHTML = "Cargando...";
-  
-  const list = await apiPost({ action: "getIncidencias", numEmpleado: empSesion.numEmpleado });
-
-  if (!list || list.length === 0) {
-    cnt.innerHTML = "<p style='text-align:center;'>Sin incidencias registradas.</p>";
-    return;
-  }
-  
-  let html = `
-    <table>
-      <thead>
-        <tr>
-          <th>TIPO</th>
-          <th>FECHA</th>
-          <th>DÍAS/HRS</th>
-          <th>ESTADO</th>
-        </tr>
-      </thead>
-      <tbody>`;
+      const cnt = document.getElementById('cntIncidencias');
+      cnt.innerHTML = "<p style='text-align:center;'>Cargando incidencias...</p>";
       
-  list.forEach(i => {
-    html += `
-      <tr>
-        <td>${i.tipo}</td>
-        <td>${i.fecha}</td>
-        <td>${i.dias}</td>
-        <td>${i.autorizado}</td>
-      </tr>`;
-  });
-  
-  html += "</tbody></table>";
-  cnt.innerHTML = html;
-}
+      const list = await apiPost({ action: "getIncidencias", numEmpleado: empSesion.numEmpleado });
+
+      if (!list || list.length === 0) {
+        cnt.innerHTML = "<p style='text-align:center;'>Sin incidencias registradas.</p>";
+        return;
+      }
+
+      const incidenciasValidacion = list.filter(i => String(i.autorizado).trim().toUpperCase() !== "NOMINA");
+      const incidenciasPago = list.filter(i => String(i.autorizado).trim().toUpperCase() === "NOMINA");
+
+      let html = "";
+
+      // BLOQUE 1: EN PROCESO DE VALIDACIÓN
+      html += `
+        <div class="block-detail">
+          <div class="block-header">EN PROCESO DE VALIDACIÓN</div>
+          <table>
+            <thead>
+              <tr>
+                <th>TIPO</th>
+                <th>FECHA</th>
+                <th>DÍAS/HRS</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+      if (incidenciasValidacion.length === 0) {
+        html += `<tr><td colspan="3" style="color:#94a3b8; font-size:11px;">Sin incidencias en validación</td></tr>`;
+      } else {
+        incidenciasValidacion.forEach(i => {
+          const color = obtenerColorTexto(i.autorizado);
+          html += `
+            <tr style="color:${color}; font-weight:600;">
+              <td>${i.tipo}</td>
+              <td>${i.fecha}</td>
+              <td>${i.dias}</td>
+            </tr>`;
+        });
+      }
+      html += `</tbody></table></div>`;
+
+      // BLOQUE 2: EN PROCESO DE PAGO / REGISTRADO
+      html += `
+        <div class="block-detail">
+          <div class="block-header" style="background:#e8f8eb; color:#15803d; border-color:#bbf7d0;">PROCESADO EN NÓMINA</div>
+          <table>
+            <thead>
+              <tr>
+                <th>TIPO</th>
+                <th>FECHA</th>
+                <th>DÍAS/HRS</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+      if (incidenciasPago.length === 0) {
+        html += `<tr><td colspan="3" style="color:#94a3b8; font-size:11px;">Sin incidencias procesadas</td></tr>`;
+      } else {
+        incidenciasPago.forEach(i => {
+          html += `
+            <tr style="color:#15803d; font-weight:600;">
+              <td>${i.tipo}</td>
+              <td>${i.fecha}</td>
+              <td>${i.dias}</td>
+            </tr>`;
+        });
+      }
+      html += `</tbody></table></div>`;
+
+      cnt.innerHTML = html;
+    }
   </script>
 </body>
 </html>
