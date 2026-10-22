@@ -1,695 +1,918 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyAppPersonal</title>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyAppPersonal</title>
 
-  <style>
-    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
-    
-    body {
-      background-color: #f4f6f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 15px;
-      color: #1e293b;
-    }
-    
-    .card {
-      background: #ffffff;
-      width: 100%;
-      max-width: 390px;
-      padding: 24px;
-      border-radius: 28px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      position: relative;
-      min-height: 520px;
-      border: 1px solid #e2e8f0;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .btn-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 32px;
-      height: 32px;
-      background: #f1f5f9;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 14px;
-      color: #64748b;
-      transition: all 0.2s ease;
-    }
-    
-    .btn-close:hover { background: #e2e8f0; color: #0f172a; }
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    .title-app { text-align: center; font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
-    
-    .subtitle-app {
-      text-align: center;
-      font-size: 15px;
-      font-weight: 600;
-      color: #22c55e;
-      margin-top: 4px;
-      margin-bottom: 20px;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
 
-    .divider { height: 1px; background-color: #f1f5f9; margin: 15px 0 20px 0; border: none; }
+        body {
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 15px;
+            color: #1e293b;
+        }
 
-    .form-group { margin-bottom: 16px; text-align: left; }
-    
-    label { font-weight: 600; display: block; margin-bottom: 6px; font-size: 13px; color: #475569; }
-    
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      outline: none;
-      background: #f8fafc;
-      font-size: 14px;
-      transition: all 0.2s;
-    }
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 390px;
+            padding: 24px;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            min-height: 520px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
 
-    input[type="text"]:focus, input[type="password"]:focus {
-      border-color: #22c55e;
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
-    }
+        .btn-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            color: #64748b;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
 
-    .btn-main {
-      width: 100%;
-      padding: 14px;
-      background-color: #22c55e;
-      color: white;
-      border: none;
-      border-radius: 18px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 600;
-      margin-top: 10px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
-    }
+            .btn-close:hover {
+                background: #e2e8f0;
+                color: #0f172a;
+            }
 
-    .btn-main:hover { background-color: #16a34a; transform: translateY(-1px); }
+        .title-app {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
 
-    .btn-secondary { background-color: #f1f5f9; color: #475569; box-shadow: none; }
-    .btn-secondary:hover { background-color: #e2e8f0; color: #0f172a; }
+        .subtitle-app {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #22c55e;
+            margin-top: 4px;
+            margin-bottom: 20px;
+        }
 
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
+        .divider {
+            height: 1px;
+            background-color: #f1f5f9;
+            margin: 15px 0 20px 0;
+            border: none;
+        }
 
-    .menu-item {
-      background: #f8fafc;
-      border-radius: 20px;
-      padding: 18px 12px;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #f1f5f9;
-      font-size: 26px;
-      transition: all 0.2s ease;
-    }
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
 
-    .menu-item:hover {
-      background: #e8f8eb;
-      border-color: #bbf7d0;
-      transform: translateY(-2px);
-    }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #475569;
+        }
 
-    .menu-item span { font-size: 13px; font-weight: 600; color: #334155; margin-top: 6px; }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            outline: none;
+            background: #f8fafc;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
 
-    /* Tablas */
-    table { width: 100%; border-collapse: collapse; margin-top: 8px; background: #fff; border-radius: 12px; overflow: hidden; }
-    th, td { padding: 9px 10px; text-align: center; font-size: 12px; }
-    th { background: #f1f5f9; font-weight: 600; color: #475569; }
-    td { border-bottom: 1px solid #f1f5f9; }
+            input[type="text"]:focus, input[type="password"]:focus {
+                border-color: #22c55e;
+                background: #fff;
+                box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+            }
 
-    .hidden { display: none !important; }
-    .msg-error { color: #ef4444; text-align: center; font-size: 13px; margin-top: 12px; font-weight: 500; }
+        .btn-main {
+            width: 100%;
+            padding: 14px;
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+        }
 
-    .recibo-block {
-      background: #f8fafc;
-      padding: 12px;
-      border-radius: 14px;
-      margin-bottom: 10px;
-      border: 1px solid #e2e8f0;
-      text-align: left;
-    }
+            .btn-main:hover {
+                background-color: #16a34a;
+                transform: translateY(-1px);
+            }
 
-    .recibo-link { color: #16a34a; font-weight: 600; text-decoration: none; font-size: 13px; display: inline-block; margin: 2px 0; }
-    .recibo-link:hover { text-decoration: underline; }
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: #475569;
+            box-shadow: none;
+        }
 
-    .field-card {
-      background: #f8fafc;
-      padding: 10px 14px;
-      border-radius: 14px;
-      margin-bottom: 8px;
-      border: 1px solid #f1f5f9;
-    }
+            .btn-secondary:hover {
+                background-color: #e2e8f0;
+                color: #0f172a;
+            }
 
-    .field-label { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; }
-    .field-value { font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 2px; }
-    
-    .qr-bar-container { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-top: 15px; 
-      background: #f8fafc;
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid #f1f5f9;
-    }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
 
-    .block-detail {
-      border: 1px solid #e2e8f0;
-      padding: 12px;
-      border-radius: 16px;
-      margin-bottom: 12px;
-      background-color: #f8fafc;
-    }
+        .menu-item {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 18px 12px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #f1f5f9;
+            font-size: 26px;
+            transition: all 0.2s ease;
+        }
 
-    .block-header {
-      font-size: 12px;
-      font-weight: 700;
-      text-align: center;
-      background: #ffffff;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-      padding: 6px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-  </style>
+            .menu-item:hover {
+                background: #e8f8eb;
+                border-color: #bbf7d0;
+                transform: translateY(-2px);
+            }
+
+            .menu-item span {
+                font-size: 13px;
+                font-weight: 600;
+                color: #334155;
+                margin-top: 6px;
+            }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 9px 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        td {
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .clickable-row {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+            .clickable-row:hover {
+                background: #f1f5f9 !important;
+            }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .msg-error {
+            color: #ef4444;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .recibo-block {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .recibo-link {
+            color: #16a34a;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+            .recibo-link:hover {
+                text-decoration: underline;
+            }
+
+        .field-card {
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 14px;
+            margin-bottom: 8px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .field-label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .field-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 2px;
+        }
+
+        .qr-bar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .block-detail {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            background-color: #f8fafc;
+        }
+
+        .block-header {
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            background: #ffffff;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            padding: 6px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .profile-photo-container {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #22c55e;
+            flex-shrink: 0;
+        }
+
+            .profile-photo-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
 </head>
 <body>
 
-  <div class="card">
+    <div class="card">
 
-    <!-- LOGIN -->
-    <div id="viewLogin">
-      <div style="text-align:center; margin-top:20px; margin-bottom: 10px;">
-        <div style="width: 60px; height: 60px; background: #e8f8eb; color: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; font-size: 28px;">👤</div>
-        <div class="title-app">MyAppPersonal</div>
-      </div>
-      <hr class="divider">
-      
-      <div class="form-group">
-        <label>Usuario</label>
-        <input type="text" id="txtUser" placeholder="Ingresa tu usuario">
-      </div>
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" id="txtPass" placeholder="••••••••">
-      </div>
-      
-      <button class="btn-main" onclick="fnLogin()">ENTRAR</button>
-      <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="window.close()">CERRAR</button>
-      <div id="loginError" class="msg-error"></div>
+        <!-- LOGIN -->
+        <div id="viewLogin">
+            <div style="text-align:center; margin-top:20px; margin-bottom: 10px;">
+                <div style="width: 60px; height: 60px; background: #e8f8eb; color: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; font-size: 28px;">👤</div>
+                <div class="title-app">MyAppPersonal</div>
+            </div>
+            <hr class="divider">
+
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" id="txtUser" placeholder="Ingresa tu usuario">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="txtPass" placeholder="••••••••">
+            </div>
+
+            <button class="btn-main" onclick="fnLogin()">ENTRAR</button>
+            <button class="btn-main btn-secondary" style="margin-top:8px;" onclick="window.close()">CERRAR</button>
+            <div id="loginError" class="msg-error"></div>
+        </div>
+
+        <!-- MENÚ PRINCIPAL -->
+        <div id="viewMenu" class="hidden">
+            <div class="btn-close" onclick="fnLogout()">✕</div>
+            <div class="title-app" style="margin-top:10px;">MyAppPersonal</div>
+            <div class="subtitle-app" id="lblNombreEmp">Cargando...</div>
+
+            <div class="menu-grid">
+                <div class="menu-item" onclick="fnNavTo('viewReloj')">
+                    ⏱️
+                    <span>Reloj</span>
+                </div>
+                <div class="menu-item" onclick="fnNavTo('viewNomina')">
+                    💵
+                    <span>Nómina</span>
+                </div>
+                <div class="menu-item" onclick="fnNavTo('viewDetalleBonos')">
+                    🎁
+                    <span>Bonos y Extras</span>
+                </div>
+                <div class="menu-item" onclick="fnNavTo('viewIncidencias')">
+                    🏖️
+                    <span>Incidencias</span>
+                </div>
+                <div class="menu-item" style="grid-column: span 2;" onclick="fnNavTo('viewDatos')">
+                    👤
+                    <span>Datos Personales</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA RELOJ -->
+        <div id="viewReloj" class="hidden">
+            <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+            <div class="title-app" style="margin-top:10px;">⏱️ Reloj</div>
+            <hr class="divider">
+            <div id="cntReloj">Cargando marcajes...</div>
+        </div>
+
+        <!-- VISTA NÓMINA -->
+        <div id="viewNomina" class="hidden">
+            <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+            <div class="title-app" style="margin-top:10px;">💵 Recibos de Nómina</div>
+            <div style="text-align:left; margin-top:10px; margin-bottom: 10px;">
+                <span style="font-size:11px; color:#64748b;">Empleado:</span><br>
+                <strong id="lblNominaEmpleado" style="color:#0f172a;">...</strong>
+            </div>
+            <div id="cntRecibos">Cargando recibos...</div>
+        </div>
+
+        <!-- VISTA BONOS Y EXTRAS -->
+        <div id="viewDetalleBonos" class="hidden">
+            <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+            <div class="title-app" style="margin-top:10px; font-size:20px;">🎁 Bonos y Extras</div>
+            <hr class="divider">
+            <div id="cntDetalleBonosExtras">Cargando detalles...</div>
+        </div>
+
+        <!-- VISTA DATOS PERSONALES -->
+        <div id="viewDatos" class="hidden">
+            <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+            <div class="title-app" style="margin-top:10px;">👤 Datos Personales</div>
+            <hr class="divider">
+
+            <div style="text-align:left; max-height: 420px; overflow-y: auto; padding-right: 2px;">
+
+                <!-- ENCABEZADO CON FOTO Y NOMBRE -->
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px; background: #f8fafc; padding: 10px; border-radius: 14px; border: 1px solid #f1f5f9;">
+                    <div class="profile-photo-container" id="cntFotoPerfil">
+                        <span style="font-size: 22px;">👤</span>
+                    </div>
+                    <div style="flex-grow: 1; overflow: hidden;">
+                        <div class="field-label">Nombre</div>
+                        <div class="field-value" id="dNombre" style="font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                    <div class="field-card">
+                        <div class="field-label">Ingreso</div>
+                        <div class="field-value" id="dIngreso" style="font-size: 12px;">-</div>
+                    </div>
+                    <div class="field-card">
+                        <div class="field-label">CURP</div>
+                        <div class="field-value" id="dCurp" style="font-size:10px;">-</div>
+                    </div>
+                </div>
+
+                <div class="field-card">
+                    <div class="field-label">IMSS</div>
+                    <div class="field-value">
+                        <span id="dImss">-</span>
+                        <span id="cntAfilPdf" style="margin-left:8px;"></span>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                    <div class="field-card">
+                        <div class="field-label">Localidad</div>
+                        <div class="field-value" id="dLocalidad" style="font-size: 12px;">-</div>
+                    </div>
+                    <div class="field-card">
+                        <div class="field-label">Ruta</div>
+                        <div class="field-value" id="dRuta" style="font-size: 12px;">-</div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE VACACIONES -->
+                <div class="block-detail" style="margin-top: 10px; margin-bottom: 8px; padding: 10px;">
+                    <div class="block-header" style="margin-bottom: 8px; font-size: 11px;">VACACIONES</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; text-align: center;">
+                        <div style="background: #fff; padding: 6px 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <div class="field-label" style="font-size: 9px;">Años</div>
+                            <div class="field-value" id="dVAcAnios" style="font-size: 12px;">-</div>
+                        </div>
+                        <div style="background: #fff; padding: 6px 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <div class="field-label" style="font-size: 9px;">Derecho</div>
+                            <div class="field-value" id="dVAcDerecho" style="font-size: 12px;">-</div>
+                        </div>
+                        <div style="background: #fff; padding: 6px 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <div class="field-label" style="font-size: 9px;">Tomadas</div>
+                            <div class="field-value" id="dVAcTomadas" style="font-size: 12px;">-</div>
+                        </div>
+                        <div style="background: #e8f8eb; padding: 6px 2px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                            <div class="field-label" style="font-size: 9px; color: #15803d;">Saldo</div>
+                            <div class="field-value" id="dVAcSaldo" style="font-size: 12px; color: #15803d;">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qr-bar-container">
+                    <div style="text-align:center;">
+                        <div class="field-label" style="margin-bottom:4px;">Comedor</div>
+                        <svg id="barcodeComedor"></svg>
+                    </div>
+                    <div style="text-align:center;">
+                        <div class="field-label" style="margin-bottom:4px;">QR Acceso</div>
+                        <div id="qrcodeCanvas" style="display:inline-block;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA INCIDENCIAS -->
+        <div id="viewIncidencias" class="hidden">
+            <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
+            <div class="title-app" style="margin-top:10px;">🏖️ Incidencias</div>
+            <hr class="divider">
+            <div id="cntIncidencias">Cargando...</div>
+        </div>
+
+        <!-- VISTA DETALLE DE INCIDENCIA (MODAL INTERNO) -->
+        <div id="viewDetalleIncidencia" class="hidden">
+            <div class="btn-close" onclick="fnNavTo('viewIncidencias')">✕</div>
+            <div class="title-app" style="margin-top:10px; font-size:18px;">📄 Detalle de Incidencia</div>
+            <hr class="divider">
+
+            <div style="text-align:center; margin-bottom: 12px;">
+                <div class="profile-photo-container" id="modalFotoIncidencia" style="width: 80px; height: 80px; margin: 0 auto 8px auto;">
+                    <span style="font-size: 26px;">👤</span>
+                </div>
+                <strong id="modalNomEmpleado" style="font-size: 13px; color: #0f172a;">-</strong>
+            </div>
+
+            <div class="field-card">
+                <div class="field-label">Tipo de Incidencia</div>
+                <div class="field-value" id="modalTipoInc">-</div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div class="field-card">
+                    <div class="field-label">Fecha</div>
+                    <div class="field-value" id="modalFechaInc">-</div>
+                </div>
+                <div class="field-card">
+                    <div class="field-label">Días / Horas</div>
+                    <div class="field-value" id="modalDiasInc">-</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-label">Estatus</div>
+                <div class="field-value" id="modalEstatusInc">-</div>
+            </div>
+
+            <button class="btn-main btn-secondary" style="margin-top: 15px;" onclick="fnNavTo('viewIncidencias')">Regresar</button>
+        </div>
+
     </div>
 
-    <!-- MENÚ PRINCIPAL -->
-    <div id="viewMenu" class="hidden">
-      <div class="btn-close" onclick="fnLogout()">✕</div>
-      <div class="title-app" style="margin-top:10px;">MyAppPersonal</div>
-      <div class="subtitle-app" id="lblNombreEmp">Cargando...</div>
+    <script>
+            const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyZ3fBd_P6NaNc6G4LK7dmb4x4DiGUPJr-dmZNpQBhqFgdTaL_9aA_lQJ_Kinru102OBA/exec";
 
-      <div class="menu-grid">
-        <div class="menu-item" onclick="fnNavTo('viewReloj')">
-          ⏱️
-          <span>Reloj</span>
-        </div>
-        <div class="menu-item" onclick="fnNavTo('viewNomina')">
-          💵
-          <span>Nómina</span>
-        </div>
-        <div class="menu-item" onclick="fnNavTo('viewDetalleBonos')">
-          🎁
-          <span>Bonos y Extras</span>
-        </div>
-        <div class="menu-item" onclick="fnNavTo('viewIncidencias')">
-          🏖️
-          <span>Incidencias</span>
-        </div>
-        <div class="menu-item" style="grid-column: span 2;" onclick="fnNavTo('viewDatos')">
-          👤
-          <span>Datos Personales</span>
-        </div>
-      </div>
-    </div>
+            let empSesion = null;
+            let cacheIncidenciasVal = [];
 
-    <!-- VISTA RELOJ -->
-    <div id="viewReloj" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
-      <div class="title-app" style="margin-top:10px;">⏱️ Reloj</div>
-      <hr class="divider">
-      <div id="cntReloj">Cargando marcajes...</div>
-    </div>
+            async function apiPost(data) {
+              try {
+                const res = await fetch(WEB_APP_URL, {
+                  method: "POST",
+                  headers: { "Content-Type": "text/plain;charset=utf-8" },
+                  body: JSON.stringify(data)
+                });
+                return await res.json();
+              } catch (e) {
+                console.error("Error API:", e);
+                return { exito: false, mensaje: "Error de conexión al servidor" };
+              }
+            }
 
-    <!-- VISTA NÓMINA -->
-    <div id="viewNomina" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
-      <div class="title-app" style="margin-top:10px;">💵 Recibos de Nómina</div>
-      <div style="text-align:left; margin-top:10px; margin-bottom: 10px;">
-        <span style="font-size:11px; color:#64748b;">Empleado:</span><br>
-        <strong id="lblNominaEmpleado" style="color:#0f172a;">...</strong>
-      </div>
-      <div id="cntRecibos">Cargando recibos...</div>
-    </div>
+            function fnNavTo(viewId) {
+              const views = ['viewLogin', 'viewMenu', 'viewReloj', 'viewNomina', 'viewDetalleBonos', 'viewDatos', 'viewIncidencias', 'viewDetalleIncidencia'];
+              views.forEach(v => document.getElementById(v).classList.add('hidden'));
+              document.getElementById(viewId).classList.remove('hidden');
 
-    <!-- VISTA BONOS Y EXTRAS -->
-    <div id="viewDetalleBonos" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
-      <div class="title-app" style="margin-top:10px; font-size:20px;">🎁 Bonos y Extras</div>
-      <hr class="divider">
-      <div id="cntDetalleBonosExtras">Cargando detalles...</div>
-    </div>
+              if (viewId === 'viewReloj') cargarReloj();
+              if (viewId === 'viewNomina') cargarNomina();
+              if (viewId === 'viewDetalleBonos') cargarDetalleBonos();
+              if (viewId === 'viewDatos') cargarDatosPersonales();
+              if (viewId === 'viewIncidencias') cargarIncidencias();
+            }
 
-    <!-- VISTA DATOS PERSONALES -->
-    <div id="viewDatos" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
-      <div class="title-app" style="margin-top:10px;">👤 Datos Personales</div>
-      <hr class="divider">
+            async function fnLogin() {
+              const u = document.getElementById('txtUser').value;
+              const p = document.getElementById('txtPass').value;
+              const err = document.getElementById('loginError');
+              err.innerText = "Validando acceso...";
 
-      <div style="text-align:left;">
-        <div class="field-card">
-          <div class="field-label">Nombre</div>
-          <div class="field-value" id="dNombre">-</div>
-        </div>
+              const res = await apiPost({ action: "login", user: u, pass: p });
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="field-card">
-            <div class="field-label">Ingreso</div>
-            <div class="field-value" id="dIngreso">-</div>
-          </div>
-          <div class="field-card">
-            <div class="field-label">CURP</div>
-            <div class="field-value" id="dCurp" style="font-size:11px;">-</div>
-          </div>
-        </div>
+              if (res.exito) {
+                err.innerText = "";
+                empSesion = res.empleado;
+                document.getElementById('lblNombreEmp').innerText = empSesion.nombre;
+                document.getElementById('lblNominaEmpleado').innerText = empSesion.nombre;
+                fnNavTo('viewMenu');
+              } else {
+                err.innerText = res.mensaje;
+              }
+            }
 
-        <div class="field-card">
-          <div class="field-label">IMSS</div>
-          <div class="field-value">
-            <span id="dImss">-</span> 
-            <span id="cntAfilPdf" style="margin-left:8px;"></span>
-          </div>
-        </div>
+            function fnLogout() {
+              empSesion = null;
+              document.getElementById('txtUser').value = "";
+              document.getElementById('txtPass').value = "";
+              fnNavTo('viewLogin');
+            }
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="field-card">
-            <div class="field-label">Localidad</div>
-            <div class="field-value" id="dLocalidad">-</div>
-          </div>
-          <div class="field-card">
-            <div class="field-label">Ruta</div>
-            <div class="field-value" id="dRuta">-</div>
-          </div>
-        </div>
+            async function cargarReloj() {
+              const cnt = document.getElementById('cntReloj');
+              cnt.innerHTML = "<p style='text-align:center;'>Cargando marcajes...</p>";
+              const data = await apiPost({ action: "getReloj", numEmpleado: empSesion.numEmpleado });
 
-        <div class="qr-bar-container">
-          <div style="text-align:center;">
-            <div class="field-label" style="margin-bottom:4px;">Comedor</div>
-            <svg id="barcodeComedor"></svg>
-          </div>
-          <div style="text-align:center;">
-            <div class="field-label" style="margin-bottom:4px;">QR Acceso</div>
-            <div id="qrcodeCanvas" style="display:inline-block;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+              if (!data || data.length === 0) {
+                cnt.innerHTML = "<p style='text-align:center;'>No hay marcajes registrados.</p>";
+                return;
+              }
 
-    <!-- VISTA INCIDENCIAS -->
-    <div id="viewIncidencias" class="hidden">
-      <div class="btn-close" onclick="fnNavTo('viewMenu')">✕</div>
-      <div class="title-app" style="margin-top:10px;">🏖️ Incidencias</div>
-      <hr class="divider">
-      <div id="cntIncidencias">Cargando...</div>
-    </div>
+              let html = "<table><thead><tr><th>Fecha</th><th>Hora</th></tr></thead><tbody>";
+              let ultimaFecha = "";
+              let esFilaOpaca = false;
 
-  </div>
+              data.forEach(r => {
+                if (r.fecha !== ultimaFecha) {
+                  if (ultimaFecha !== "") esFilaOpaca = !esFilaOpaca;
+                  ultimaFecha = r.fecha;
+                }
 
-  <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwzrCZM5rAp9n9G6nz4-C0xgv6KXIabRNy9IWDhN_xYfpiTvpBppt7OprC7ZjfawkYf/exec";
+                const estiloFondo = esFilaOpaca ? "background-color: #f8fafc;" : "background-color: #ffffff;";
 
-    let empSesion = null;
+                html += `<tr style="${estiloFondo}">
+                          <td>${r.fecha}</td>
+                          <td>${r.hora}</td>
+                        </tr>`;
+              });
 
-    async function apiPost(data) {
-      try {
-        const res = await fetch(WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data)
-        });
-        return await res.json();
-      } catch (e) {
-        console.error("Error API:", e);
-        return { exito: false, mensaje: "Error de conexión al servidor" };
-      }
-    }
+              html += "</tbody></table>";
+              cnt.innerHTML = html;
+            }
 
-    function fnNavTo(viewId) {
-      const views = ['viewLogin', 'viewMenu', 'viewReloj', 'viewNomina', 'viewDetalleBonos', 'viewDatos', 'viewIncidencias'];
-      views.forEach(v => document.getElementById(v).classList.add('hidden'));
-      document.getElementById(viewId).classList.remove('hidden');
+            async function cargarNomina() {
+              const cnt = document.getElementById('cntRecibos');
+              cnt.innerHTML = "<p style='text-align:center;'>Cargando recibos...</p>";
+              const list = await apiPost({ action: "getRecibos", numEmpleado: empSesion.numEmpleado });
 
-      if (viewId === 'viewReloj') cargarReloj();
-      if (viewId === 'viewNomina') cargarNomina();
-      if (viewId === 'viewDetalleBonos') cargarDetalleBonos();
-      if (viewId === 'viewDatos') cargarDatosPersonales();
-      if (viewId === 'viewIncidencias') cargarIncidencias();
-    }
+              if (!list || list.length === 0) {
+                cnt.innerHTML = "<p style='text-align:center;'>No se encontraron recibos.</p>";
+                return;
+              }
 
-    async function fnLogin() {
-      const u = document.getElementById('txtUser').value;
-      const p = document.getElementById('txtPass').value;
-      const err = document.getElementById('loginError');
-      err.innerText = "Validando acceso...";
+              list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-      const res = await apiPost({ action: "login", user: u, pass: p });
-      
-      if (res.exito) {
-        err.innerText = "";
-        empSesion = res.empleado;
-        document.getElementById('lblNombreEmp').innerText = empSesion.nombre;
-        document.getElementById('lblNominaEmpleado').innerText = empSesion.nombre;
-        fnNavTo('viewMenu');
-      } else {
-        err.innerText = res.mensaje;
-      }
-    }
+              let html = "";
+              list.forEach(r => {
+                html += `
+                  <div class="recibo-block">
+                    <div style="font-size:11px; color:#64748b;">${r.fecha}</div>
+                    <a href="${r.url}" target="_blank" class="recibo-link">📄 ${r.nombre}</a>
+                  </div>`;
+              });
+              cnt.innerHTML = html;
+            }
 
-    function fnLogout() {
-      empSesion = null;
-      document.getElementById('txtUser').value = "";
-      document.getElementById('txtPass').value = "";
-      fnNavTo('viewLogin');
-    }
+            function obtenerColorTexto(estado) {
+              const st = String(estado).trim().toUpperCase();
+              if (st === "NOMINA") return "#15803d";
+              if (st.includes("AUTORIZAD") || st.includes("AUTORIZA")) return "#16a34a";
+              if (st.includes("PENDIENTE")) return "#d97706";
+              if (st.includes("CANCELADO") || st.includes("RECHAZADO")) return "#dc2626";
+              return "#475569";
+            }
 
-    async function cargarReloj() {
-      const cnt = document.getElementById('cntReloj');
-      cnt.innerHTML = "<p style='text-align:center;'>Cargando marcajes...</p>";
-      const data = await apiPost({ action: "getReloj", numEmpleado: empSesion.numEmpleado });
-      
-      if (!data || data.length === 0) {
-        cnt.innerHTML = "<p style='text-align:center;'>No hay marcajes registrados.</p>";
-        return;
-      }
+            async function cargarDetalleBonos() {
+              const cnt = document.getElementById("cntDetalleBonosExtras");
+              cnt.innerHTML = "<p style='text-align:center;'>Cargando detalle...</p>";
 
-      let html = "<table><thead><tr><th>Fecha</th><th>Hora</th></tr></thead><tbody>";
-      let ultimaFecha = "";
-      let esFilaOpaca = false;
+              const data = await apiPost({ action: "getDetalleBonos", numEmpleado: empSesion.numEmpleado });
 
-      data.forEach(r => {
-        if (r.fecha !== ultimaFecha) {
-          if (ultimaFecha !== "") esFilaOpaca = !esFilaOpaca;
-          ultimaFecha = r.fecha;
-        }
+              let html = "";
 
-        const estiloFondo = esFilaOpaca ? "background-color: #f8fafc;" : "background-color: #ffffff;";
+              html += `
+                <div class="block-detail">
+                  <div class="block-header">EN PROCESO DE VALIDACIÓN</div>
 
-        html += `<tr style="${estiloFondo}">
-                  <td>${r.fecha}</td>
-                  <td>${r.hora}</td>
-                </tr>`;
-      });
+                  <strong style="font-size:12px; color:#475569;">Bonos</strong>
+                  <table style="margin-bottom:12px;">
+                    <thead>
+                      <tr><th>Importe</th><th>Motivo</th></tr>
+                    </thead>
+                    <tbody>`;
 
-      html += "</tbody></table>";
-      cnt.innerHTML = html;
-    }
+              if (!data.bonosValidacion || data.bonosValidacion.length === 0) {
+                html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin bonos en validación</td></tr>`;
+              } else {
+                data.bonosValidacion.forEach(b => {
+                  const color = obtenerColorTexto(b.autoriza);
+                  html += `
+                    <tr style="color:${color}; font-weight:600;">
+                      <td>$ ${Number(b.importe).toFixed(2)}</td>
+                      <td>${b.motivo}</td>
+                    </tr>`;
+                });
+              }
+              html += `</tbody></table>`;
 
-    async function cargarNomina() {
-      const cnt = document.getElementById('cntRecibos');
-      cnt.innerHTML = "<p style='text-align:center;'>Cargando recibos...</p>";
-      const list = await apiPost({ action: "getRecibos", numEmpleado: empSesion.numEmpleado });
+              html += `
+                  <strong style="font-size:12px; color:#475569;">Extras</strong>
+                  <table>
+                    <thead>
+                      <tr><th>Fecha</th><th>Horas</th></tr>
+                    </thead>
+                    <tbody>`;
 
-      if (!list || list.length === 0) {
-        cnt.innerHTML = "<p style='text-align:center;'>No se encontraron recibos.</p>";
-        return;
-      }
+              if (!data.extrasValidacion || data.extrasValidacion.length === 0) {
+                html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin extras en validación</td></tr>`;
+              } else {
+                data.extrasValidacion.forEach(e => {
+                  const color = obtenerColorTexto(e.autoriza);
+                  html += `
+                    <tr style="color:${color}; font-weight:600;">
+                      <td>${e.fecha}</td>
+                      <td>${e.horas} hrs</td>
+                    </tr>`;
+                });
+              }
+              html += `</tbody></table></div>`;
 
-      // ORDENAR DE MAYOR A MENOR POR TIMESTAMP (MÁS RECIENTES PRIMERO)
-      list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+              html += `
+                <div class="block-detail">
+                  <div class="block-header" style="background:#e8f8eb; color:#15803d; border-color:#bbf7d0;">PROCESADO EN NÓMINA</div>
 
-      let html = "";
-      list.forEach(r => {
-        html += `
-          <div class="recibo-block">
-            <div style="font-size:11px; color:#64748b;">${r.fecha}</div>
-            <a href="${r.url}" target="_blank" class="recibo-link">📄 ${r.nombre}</a>
-          </div>`;
-      });
-      cnt.innerHTML = html;
-    }
+                  <strong style="font-size:12px; color:#475569;">Bonos</strong>
+                  <table style="margin-bottom:12px;">
+                    <thead>
+                      <tr><th>Importe</th><th>Motivo</th></tr>
+                    </thead>
+                    <tbody>`;
 
-    function obtenerColorTexto(estado) {
-      const st = String(estado).trim().toUpperCase();
-      if (st === "NOMINA") return "#15803d";
-      if (st.includes("AUTORIZAD") || st.includes("AUTORIZA")) return "#16a34a";
-      if (st.includes("PENDIENTE")) return "#d97706";
-      if (st.includes("CANCELADO") || st.includes("RECHAZADO")) return "#dc2626";
-      return "#475569";
-    }
+              if (!data.bonosPago || data.bonosPago.length === 0) {
+                html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin bonos procesados</td></tr>`;
+              } else {
+                data.bonosPago.forEach(b => {
+                  html += `
+                    <tr style="color:#15803d; font-weight:600;">
+                      <td>$ ${Number(b.importe).toFixed(2)}</td>
+                      <td>${b.motivo}</td>
+                    </tr>`;
+                });
+              }
+              html += `</tbody></table>`;
 
-    async function cargarDetalleBonos() {
-      const cnt = document.getElementById("cntDetalleBonosExtras");
-      cnt.innerHTML = "<p style='text-align:center;'>Cargando detalle...</p>";
+              html += `
+                  <strong style="font-size:12px; color:#475569;">Extras</strong>
+                  <table>
+                    <thead>
+                      <tr><th>Fecha</th><th>Horas</th></tr>
+                    </thead>
+                    <tbody>`;
 
-      const data = await apiPost({ action: "getDetalleBonos", numEmpleado: empSesion.numEmpleado });
+              if (!data.extrasPago || data.extrasPago.length === 0) {
+                html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin extras procesados</td></tr>`;
+              } else {
+                data.extrasPago.forEach(e => {
+                  html += `
+                    <tr style="color:#15803d; font-weight:600;">
+                      <td>${e.fecha}</td>
+                      <td>${e.horas} hrs</td>
+                    </tr>`;
+                });
+              }
+              html += `</tbody></table></div>`;
 
-      let html = "";
+              cnt.innerHTML = html;
+            }
 
-      // BLOQUE 1: EN PROCESO DE VALIDACIÓN
-      html += `
-        <div class="block-detail">
-          <div class="block-header">EN PROCESO DE VALIDACIÓN</div>
-          
-          <strong style="font-size:12px; color:#475569;">Bonos</strong>
-          <table style="margin-bottom:12px;">
-            <thead>
-              <tr><th>Importe</th><th>Motivo</th></tr>
-            </thead>
-            <tbody>`;
-      
-      if (!data.bonosValidacion || data.bonosValidacion.length === 0) {
-        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin bonos en validación</td></tr>`;
-      } else {
-        data.bonosValidacion.forEach(b => {
-          const color = obtenerColorTexto(b.autoriza);
-          html += `
-            <tr style="color:${color}; font-weight:600;">
-              <td>$ ${Number(b.importe).toFixed(2)}</td>
-              <td>${b.motivo}</td>
-            </tr>`;
-        });
-      }
-      html += `</tbody></table>`;
+            async function cargarDatosPersonales() {
+              document.getElementById('dNombre').innerText = empSesion.nombre;
+              document.getElementById('dIngreso').innerText = empSesion.ingreso;
+              document.getElementById('dCurp').innerText = empSesion.curp;
+              document.getElementById('dImss').innerText = empSesion.imss;
+              document.getElementById('dLocalidad').innerText = empSesion.localidad;
+              document.getElementById('dRuta').innerText = empSesion.ruta;
 
-      html += `
-          <strong style="font-size:12px; color:#475569;">Extras</strong>
-          <table>
-            <thead>
-              <tr><th>Fecha</th><th>Horas</th></tr>
-            </thead>
-            <tbody>`;
+              // Vacaciones
+              document.getElementById('dVAcAnios').innerText = empSesion.años || "0";
+              document.getElementById('dVAcDerecho').innerText = empSesion.derecho || "0";
+              document.getElementById('dVAcTomadas').innerText = empSesion.tomadas || "0";
+              document.getElementById('dVAcSaldo').innerText = empSesion.vacaciones || "0";
 
-      if (!data.extrasValidacion || data.extrasValidacion.length === 0) {
-        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin extras en validación</td></tr>`;
-      } else {
-        data.extrasValidacion.forEach(e => {
-          const color = obtenerColorTexto(e.autoriza);
-          html += `
-            <tr style="color:${color}; font-weight:600;">
-              <td>${e.fecha}</td>
-              <td>${e.horas} hrs</td>
-            </tr>`;
-        });
-      }
-      html += `</tbody></table></div>`;
+              // Foto de perfil
+              const cntFoto = document.getElementById('cntFotoPerfil');
+              if (empSesion.fotoUrl) {
+                cntFoto.innerHTML = `<img src="${empSesion.fotoUrl}" alt="Foto">`;
+              } else {
+                cntFoto.innerHTML = `<span style="font-size: 22px;">👤</span>`;
+              }
 
-      // BLOQUE 2: PROCESADO EN NÓMINA
-      html += `
-        <div class="block-detail">
-          <div class="block-header" style="background:#e8f8eb; color:#15803d; border-color:#bbf7d0;">PROCESADO EN NÓMINA</div>
-          
-          <strong style="font-size:12px; color:#475569;">Bonos</strong>
-          <table style="margin-bottom:12px;">
-            <thead>
-              <tr><th>Importe</th><th>Motivo</th></tr>
-            </thead>
-            <tbody>`;
+              const cntAfil = document.getElementById('cntAfilPdf');
+              cntAfil.innerHTML = "<span style='font-size:11px; color:#94a3b8;'>Buscando...</span>";
 
-      if (!data.bonosPago || data.bonosPago.length === 0) {
-        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin bonos procesados</td></tr>`;
-      } else {
-        data.bonosPago.forEach(b => {
-          html += `
-            <tr style="color:#15803d; font-weight:600;">
-              <td>$ ${Number(b.importe).toFixed(2)}</td>
-              <td>${b.motivo}</td>
-            </tr>`;
-        });
-      }
-      html += `</tbody></table>`;
+              if (empSesion.imss) {
+                const res = await apiPost({ action: "getAfilPdf", imss: empSesion.imss });
+                if (res.exito) {
+                  cntAfil.innerHTML = `<a href="${res.url}" target="_blank" style="color:#ef4444; text-decoration:none; font-size:11px; font-weight:700;">[PDF]</a>`;
+                } else {
+                  cntAfil.innerHTML = "";
+                }
+              } else {
+                cntAfil.innerHTML = "";
+              }
 
-      html += `
-          <strong style="font-size:12px; color:#475569;">Extras</strong>
-          <table>
-            <thead>
-              <tr><th>Fecha</th><th>Horas</th></tr>
-            </thead>
-            <tbody>`;
+              if (empSesion.nComedor) {
+                try {
+                  JsBarcode("#barcodeComedor", empSesion.nComedor.toString(), {
+                    format: "CODE128",
+                    width: 1.2,
+                    height: 35,
+                    displayValue: false
+                  });
+                } catch (e) { console.error(e); }
+              }
 
-      if (!data.extrasPago || data.extrasPago.length === 0) {
-        html += `<tr><td colspan="2" style="color:#94a3b8; font-size:11px;">Sin extras procesados</td></tr>`;
-      } else {
-        data.extrasPago.forEach(e => {
-          html += `
-            <tr style="color:#15803d; font-weight:600;">
-              <td>${e.fecha}</td>
-              <td>${e.horas} hrs</td>
-            </tr>`;
-        });
-      }
-      html += `</tbody></table></div>`;
+              const qrContainer = document.getElementById('qrcodeCanvas');
+              qrContainer.innerHTML = "";
+              if (empSesion.qr) {
+                try {
+                  new QRCode(qrContainer, {
+                    text: empSesion.qr.toString(),
+                    width: 70,
+                    height: 70
+                  });
+                } catch (e) { console.error(e); }
+              }
+            }
 
-      cnt.innerHTML = html;
-    }
+            async function cargarIncidencias() {
+              const cnt = document.getElementById('cntIncidencias');
+              cnt.innerHTML = "<p style='text-align:center;'>Cargando incidencias...</p>";
 
-    async function cargarDatosPersonales() {
-      document.getElementById('dNombre').innerText = empSesion.nombre;
-      document.getElementById('dIngreso').innerText = empSesion.ingreso;
-      document.getElementById('dCurp').innerText = empSesion.curp;
-      document.getElementById('dImss').innerText = empSesion.imss;
-      document.getElementById('dLocalidad').innerText = empSesion.localidad;
-      document.getElementById('dRuta').innerText = empSesion.ruta;
+              const res = await apiPost({ action: "getIncidencias", numEmpleado: empSesion.numEmpleado });
 
-      const cntAfil = document.getElementById('cntAfilPdf');
-      cntAfil.innerHTML = "<span style='font-size:11px; color:#94a3b8;'>Buscando...</span>";
+              if (!res.exito) {
+                cnt.innerHTML = "<p style='text-align:center;'>Error al cargar incidencias.</p>";
+                return;
+              }
 
-      if (empSesion.imss) {
-        const res = await apiPost({ action: "getAfilPdf", imss: empSesion.imss });
-        if (res.exito) {
-          cntAfil.innerHTML = `<a href="${res.url}" target="_blank" style="color:#ef4444; text-decoration:none; font-size:11px; font-weight:700;">[PDF]</a>`;
-        } else {
-          cntAfil.innerHTML = "";
-        }
-      } else {
-        cntAfil.innerHTML = "";
-      }
+              cacheIncidenciasVal = res.validacion || [];
 
-      if (empSesion.nComedor) {
-        try {
-          JsBarcode("#barcodeComedor", empSesion.nComedor.toString(), {
-            format: "CODE128",
-            width: 1.2,
-            height: 35,
-            displayValue: false
-          });
-        } catch (e) { console.error(e); }
-      }
+              let html = "";
 
-      const qrContainer = document.getElementById('qrcodeCanvas');
-      qrContainer.innerHTML = "";
-      if (empSesion.qr) {
-        try {
-          new QRCode(qrContainer, {
-            text: empSesion.qr.toString(),
-            width: 70,
-            height: 70
-          });
-        } catch (e) { console.error(e); }
-      }
-    }
+              // BLOQUE 1: EN PROCESO DE VALIDACIÓN
+              html += `
+                <div class="block-detail">
+                  <div class="block-header">EN PROCESO DE VALIDACIÓN</div>
+                  <table>
+                    <thead>
+                      <tr><th>TIPO</th><th>FECHA</th><th>DÍAS/HRS</th></tr>
+                    </thead>
+                    <tbody>`;
 
-    async function cargarIncidencias() {
-      const cnt = document.getElementById('cntIncidencias');
-      cnt.innerHTML = "<p style='text-align:center;'>Cargando incidencias...</p>";
-      
-      const res = await apiPost({ action: "getIncidencias", numEmpleado: empSesion.numEmpleado });
+              if (!res.validacion || res.validacion.length === 0) {
+                html += `<tr><td colspan="3" style="color:#94a3b8; font-size:11px;">Sin incidencias en validación</td></tr>`;
+              } else {
+                res.validacion.forEach((i, index) => {
+                  const color = obtenerColorTexto(i.autorizado);
+                  html += `
+                    <tr class="clickable-row" style="color:${color}; font-weight:600;" onclick="verDetalleIncidencia(${index})">
+                      <td>${i.tipo}</td>
+                      <td>${i.fecha}</td>
+                      <td>${i.dias}</td>
+                    </tr>`;
+                });
+              }
+              html += `</tbody></table></div>`;
 
-      if (!res.exito) {
-        cnt.innerHTML = "<p style='text-align:center;'>Error al cargar incidencias.</p>";
-        return;
-      }
+              // BLOQUE 2: PROCESADO EN NÓMINA
+              html += `
+                <div class="block-detail">
+                  <div class="block-header" style="background:#e8f8eb; color:#15803d; border-color:#bbf7d0;">PROCESADO EN NÓMINA</div>
+                  <table>
+                    <thead>
+                      <tr><th>TIPO</th><th>FECHA</th><th>DÍAS/HRS</th></tr>
+                    </thead>
+                    <tbody>`;
 
-      let html = "";
+              if (!res.pago || res.pago.length === 0) {
+                html += `<tr><td colspan="3" style="color:#94a3b8; font-size:11px;">Sin incidencias procesadas</td></tr>`;
+              } else {
+                res.pago.forEach(i => {
+                  html += `
+                    <tr style="color:#15803d; font-weight:600;">
+                      <td>${i.tipo}</td>
+                      <td>${i.fecha}</td>
+                      <td>${i.dias}</td>
+                    </tr>`;
+                });
+              }
+              html += `</tbody></table></div>`;
 
-      // BLOQUE 1: EN PROCESO DE VALIDACIÓN
-      html += `
-        <div class="block-detail">
-          <div class="block-header">EN PROCESO DE VALIDACIÓN</div>
-          <table>
-            <thead>
-              <tr><th>TIPO</th><th>FECHA</th><th>DÍAS/HRS</th></tr>
-            </thead>
-            <tbody>`;
+              cnt.innerHTML = html;
+            }
 
-      if (!res.validacion || res.validacion.length === 0) {
-        html += `<tr><td colspan="3" style="color:#94a3b8; font-size:11px;">Sin incidencias en validación</td></tr>`;
-      } else {
-        res.validacion.forEach(i => {
-          const color = obtenerColorTexto(i.autorizado);
-          html += `
-            <tr style="color:${color}; font-weight:600;">
-              <td>${i.tipo}</td>
-              <td>${i.fecha}</td>
-              <td>${i.dias}</td>
-            </tr>`;
-        });
-      }
-      html += `</tbody></table></div>`;
+            function verDetalleIncidencia(index) {
+              const inc = cacheIncidenciasVal[index];
+              if (!inc) return;
 
-      // BLOQUE 2: PROCESADO EN NÓMINA
-      html += `
-        <div class="block-detail">
-          <div class="block-header" style="background:#e8f8eb; color:#15803d; border-color:#bbf7d0;">PROCESADO EN NÓMINA</div>
-          <table>
-            <thead>
-              <tr><th>TIPO</th><th>FECHA</th><th>DÍAS/HRS</th></tr>
-            </thead>
-            <tbody>`;
+              document.getElementById('modalNomEmpleado').innerText = empSesion.nombre;
+              document.getElementById('modalTipoInc').innerText = inc.tipo;
+              document.getElementById('modalFechaInc').innerText = inc.fecha;
+              document.getElementById('modalDiasInc').innerText = inc.dias;
+              document.getElementById('modalEstatusInc').innerText = inc.autorizado;
+              document.getElementById('modalEstatusInc').style.color = obtenerColorTexto(inc.autorizado);
 
-      if (!res.pago || res.pago.length === 0) {
-        html += `<tr><td colspan="3" style="color:#94a3b8; font-size:11px;">Sin incidencias procesadas</td></tr>`;
-      } else {
-        res.pago.forEach(i => {
-          html += `
-            <tr style="color:#15803d; font-weight:600;">
-              <td>${i.tipo}</td>
-              <td>${i.fecha}</td>
-              <td>${i.dias}</td>
-            </tr>`;
-        });
-      }
-      html += `</tbody></table></div>`;
+              const cntFotoModal = document.getElementById('modalFotoIncidencia');
+              if (empSesion.fotoUrl) {
+                cntFotoModal.innerHTML = `<img src="${empSesion.fotoUrl}" alt="Foto">`;
+              } else {
+                cntFotoModal.innerHTML = `<span style="font-size: 26px;">👤</span>`;
+              }
 
-      cnt.innerHTML = html;
-    }
-  </script>
+              fnNavTo('viewDetalleIncidencia');
+            }
+    </script>
 </body>
 </html>
